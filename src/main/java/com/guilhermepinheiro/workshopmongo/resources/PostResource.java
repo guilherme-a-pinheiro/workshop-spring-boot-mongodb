@@ -9,11 +9,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/posts")
 public class PostResource {
     @Autowired
     private PostService service;
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findAll(){
+        List<Post> list = service.findAll();
+        return ResponseEntity.ok().body(list);
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Post> findById(@PathVariable String id){
